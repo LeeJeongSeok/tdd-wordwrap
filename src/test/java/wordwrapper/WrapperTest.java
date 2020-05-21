@@ -11,4 +11,7 @@ public class WrapperTest {
         assertThat(wrap("word word", 4)).isEqualTo("word\nword");
     }
 
+    private String wrap(String s, int length) {
+        return s.replace(" ", "\n");
+    }
 }
