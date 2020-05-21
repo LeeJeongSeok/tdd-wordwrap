@@ -3,6 +3,7 @@ package wordwrapper;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 
 public class WrapperTest {
 
@@ -16,14 +17,19 @@ public class WrapperTest {
         assertWraps(null, 1, "");
         assertWraps("", 1, "");
         assertWraps("x", 1, "x");
-        assertWraps("xxxxxx", 6, "xxxxxx");
-        assertWraps("a dog", 5, "a dog");
+        assertWraps("xx", 1, "x\nx");
+        assertWraps("xxx", 1, "x\nx\nx");
     }
 
     private String wrap(String s, int width) {
         if (s == null) {
             return "";
         }
-        return s;
+
+        if (s.length() <= width) {
+            return s;
+        }
+
+        return s.substring(0, width) + "\n" + wrap(s.substring(width), width);
     }
 }
